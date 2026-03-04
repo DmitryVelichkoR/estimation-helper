@@ -1,0 +1,16 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --studio-bg: #fafaf9;
+  --studio-surface: #ffffff;
+  --studio-muted: #78716c;
+  --studio-border: #e7e5e4;
+  --studio-accent: #57534e;
+}
+
+body {
+  background-color: var(--studio-bg);
+  color: var(--studio-accent);
+}

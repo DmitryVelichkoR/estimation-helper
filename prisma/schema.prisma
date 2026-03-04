@@ -1,0 +1,51 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+enum ProjectStatus {
+  DRAFT
+  RUNNING
+  DONE
+  FAILED
+}
+
+enum OverrideTargetType {
+  FAMILY
+  COMPONENT
+}
+
+model EstimateProject {
+  id                 String    @id @default(cuid())
+  url                String
+  techKey            String
+  techConfigJson     String
+  status             ProjectStatus @default(DRAFT)
+  createdAt          DateTime  @default(now())
+  updatedAt          DateTime  @updatedAt
+  artifactsDir       String
+  analysisJsonPath   String?
+  analysisHtmlPath   String?
+  finalReportJsonPath String?
+  finalReportHtmlPath String?
+  progressJson       String?
+
+  manualOverrides    ManualOverride[]
+}
+
+model ManualOverride {
+  id         String            @id @default(cuid())
+  projectId String
+  targetType OverrideTargetType
+  targetId   String
+  devHours   Float?
+  qaHours    Float?
+  notes      String?
+  updatedAt  DateTime          @updatedAt
+
+  project    EstimateProject   @relation(fields: [projectId], references: [id], onDelete: Cascade)
+}
