@@ -1,75 +1,106 @@
-# Studio App
+# EstimationHelper
 
-Next.js (App Router) TypeScript app for site estimation. Design studio UI — neutral, calm, spacious.
+EstimationHelper is a tool for **estimating marketing websites based on reusable UI components**.
 
-## Ground Rules
+Instead of estimating by page count, the system analyzes a website, detects unique UI components, groups them into component families, and allows an estimator to assign **development and QA hours** per component.
 
-- **No changes** to `analyzer-engine/` unless explicitly requested
-- **Communication**: spawn child process (node) calling `analyze-site.mjs`
-- **Artifacts**: stored at repo-level `artifacts/<estimateId>/...`
+The goal is to make **pre-sale estimation more structured and predictable**.
 
-## Install
+---
 
-```bash
+# What the project does
+
+1. Analyzes a website using a headless browser
+2. Detects UI components (hero, cards, navigation, etc.)
+3. Groups them into reusable component families
+4. Shows reuse counts
+5. Allows assigning **Dev / QA hours**
+6. Produces a structured estimate
+
+Example component families:
+
+- Navigation
+- Hero
+- Card
+- Accordion
+- Modal
+- Footer
+- Content Block
+
+---
+
+# How to run
+
+Clone the repository
+
+Bash:
+git clone https://github.com/DmitryVelichkoR/estimation-helper.git
+cd estimation-helper
+
+
+Start the UI
+
 cd studio-app
 npm install
-cp .env.example .env   # if .env doesn't exist
-npm run db:push        # create SQLite schema
-```
-
-## Run
-
-```bash
-# Development (with hot reload)
 npm run dev
 
-# Production build
-npm run build
+Open in browser
 
-# Production server (run after build)
-npm run start
-```
+http://localhost:3000
 
-Dev server runs at [http://localhost:3000](http://localhost:3000).
 
-## Test
+Example workflow
 
-```bash
-npm run test        # run once
-npm run test:watch  # watch mode
-```
+Enter a website URL
 
-## Commands
+Run analysis
 
-| Command | Description |
-|---------|-------------|
-| `npm run dev` | Start dev server (hot reload) |
-| `npm run build` | Prisma generate + Next.js build |
-| `npm run start` | Start production server |
-| `npm run lint` | Run ESLint |
-| `npm run test` | Run Vitest tests |
-| `npm run test:watch` | Run Vitest in watch mode |
-| `npm run db:push` | Push Prisma schema to SQLite |
+Review detected components
 
-## Pages
+Assign Dev / QA hours
 
-- `/` — Landing with "Start estimate" CTA
-- `/app` — Redirects to `/app/estimates`
-- `/app/estimates` — Estimates list
-- `/app/estimates/[id]` — Estimate detail, workspace, run analysis, generate report
-- `/app/new` — New estimate form (tech profile + URL)
-- `/app/health` — Health check (DB, artifacts writable, analyzer path)
+Get total estimate
 
-## Health Check
 
-Visit [http://localhost:3000/app/health](http://localhost:3000/app/health) to verify:
+Example output
 
-- DB connection OK
-- Artifacts folder writable
-- Analyzer path exists
+Website analyzed
 
-## Analyzer Integration
+https://stripe.com
 
-- Script: `../analyzer-engine/site-analyzer/analyze-site.mjs`
-- Usage: `node analyze-site.mjs <baseUrl> [--max-pages N] [--no-llm] [--model <name>] [--out <dir>] [--debug]`
-- To write to shared artifacts: pass `--out ../../artifacts/<estimateId>`
+Analysis summary
+
+Pages analyzed: 36
+Unique components: 34
+Component families: 6
+
+Detected component families
+
+Navigation
+Hero
+Card
+Accordion
+Modal
+Footer
+Content Block
+
+Example estimation
+
+Card family
+Dev: 6h
+QA: 3h
+
+Hero
+Dev: 4h
+QA: 2h
+
+Navigation
+Dev: 5h
+QA: 2h
+
+Total estimate
+
+Dev: 30h
+QA: 15h
+
+Results are stored in /artifacts/<estimateId>/
