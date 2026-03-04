@@ -38,31 +38,31 @@ git clone https://github.com/DmitryVelichkoR/estimation-helper.git
 cd estimation-helper
 
 
-Start the UI
+# Start the UI
 
 cd studio-app
 npm install
 npm run dev
 
-Open in browser
+# Open in browser
 
 http://localhost:3000
 
 
-Example workflow
+# Example workflow
 
-Enter a website URL
+1. Enter a website URL
 
-Run analysis
+2. Run analysis
 
-Review detected components
+3. Review detected components
 
-Assign Dev / QA hours
+4. Assign Dev / QA hours
 
-Get total estimate
+5. Get total estimate
 
 
-Example output
+# Example output
 
 Website analyzed
 
